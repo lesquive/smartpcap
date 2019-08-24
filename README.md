@@ -25,3 +25,6 @@ https://scapy.readthedocs.io/en/latest/usage.html
 
 https://stackoverflow.com/questions/44440738/iterate-through-pcap-file-packet-for-packet-using-python-scapy
 
+6) Using GIT:
+
+https://rogerdudler.github.io/git-guide/
