@@ -6,7 +6,9 @@ start = time.time()
 
 pktnum = 0
 
-for pkt in PcapReader('20thousand.pcapng'):
+pkts = rdpcap ('20thousand.pcapng')
+
+for pkt in pkts:
     eth_src = pkt[Ether].src 
     eth_dst = pkt[Ether].dst
     pktnum = pktnum + 1
