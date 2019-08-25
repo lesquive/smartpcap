@@ -7,7 +7,7 @@ start = time.time()
 
 pktnum = 0
 
-pkts = rdpcap ('test.pcapng')
+pkts = rdpcap ('test.cap')
 
 start2 = time.time()
 
