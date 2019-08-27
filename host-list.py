@@ -19,8 +19,8 @@ for pkt in pkts:
     pktnum += 1
 
     try:
-        mac_src_list .add(pkt[Ether].src)
-        mac_dst_list .add(pkt[Ether].dst)
+        mac_src_list.add(pkt[Ether].src)
+        mac_dst_list.add(pkt[Ether].dst)
         ip_src_list.add(pkt[IP].src)
         ip_dst_list.add(pkt[IP].dst)
 
