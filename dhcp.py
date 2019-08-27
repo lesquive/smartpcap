@@ -24,8 +24,11 @@ pktnum = 0
 pkts = rdpcap ('test.cap')
 
 dhcp_discover = set()
+dhcp_ack = set()
 dora = []
-doraFailed = []
+doraFailed = 0
+ipList = []
+optionsList = []
 
 for pkt in pkts:
 
@@ -44,11 +47,11 @@ for pkt in pkts:
 
         dhcpId = (hex(pkt['BOOTP'].xid))
         option1 = (pkt['DHCP options'].options[0][1])
-        option2 = (pkt['DHCP options'].options[1])
-        option3 = (pkt['DHCP options'].options[2])
-        option4 = (pkt['DHCP options'].options[3])
-        option5 = (pkt['DHCP options'].options[4])
-        option6 = (pkt['DHCP options'].options[5])
+        # option2 = (pkt['DHCP options'].options[1])
+        # option3 = (pkt['DHCP options'].options[2])
+        # option4 = (pkt['DHCP options'].options[3])
+        # option5 = (pkt['DHCP options'].options[4])
+        # option6 = (pkt['DHCP options'].options[5])
         srcmac = (pkt['Ether'].src)
         print("")
 
@@ -64,16 +67,26 @@ for pkt in pkts:
                 # print (pktnum)
             elif option1 == 3 and dhcpId in dhcp_discover:
                 dora.append ("DHCP Request detected from {}, with transaction ID: {}, packet number: {}".format(srcmac, dhcpId, pktnum))
-                # print ("Found the ACK!")
+                try:
+                    for i in range(6):
+                        if (pkt['DHCP options'].options[i][0]) == 'requested_addr':
+                            #print ("FOUND AN IP!")
+                            ipList.append("IP Address: {} was assigned to device {}".format((pkt['DHCP options'].options[i][1]), srcmac))
+                except:
+                    pass
+                # print ("Found the Request!")
                 # print (pktnum)
             elif option1 == 5 and dhcpId in dhcp_discover:
+                dhcp_ack.add(dhcpId)
                 dora.append ("DHCP ACK detected from {}, with transaction ID: {}, packet number: {}".format(srcmac, dhcpId, pktnum))
                 # print ("Found the ACK!")
                 # print (pktnum)
-            elif option1 != 5 and option1 != 1 and dhcpId in dhcp_discover:
-                doraFailed.append("DHCP ACK missing for transaction ID: {}".format(dhcpId))
-                #If not Discover and not ACK to avoid False Positives, because 
-                #otherwise Discover Messages will trigger.
+
+
+            # elif option1 != 5 and option1 != 1 and dhcpId in dhcp_discover:
+            #     doraFailed.append("DHCP ACK missing for transaction ID: {}".format(dhcpId))
+            #     #If not Discover and not ACK to avoid False Positives, because 
+            #     #otherwise Discover Messages will trigger.
                 
     except:
         pass
@@ -82,11 +95,21 @@ for i in dora:
     print(i)
 
 print("")
-for i in doraFailed:
+
+# for i in doraFailed:
+#     print(i)
+
+for i in dhcp_discover:
+    if i not in dhcp_ack:
+        print("DHCP ACK missing for transaction ID: {}".format(i))
+        doraFailed +=1
+
+print("")
+for i in ipList:
     print(i)
 
 print("")
-print("Number of DHCP Transactions Failed: {}".format(len(doraFailed)))
+print("Number of DHCP Transactions Failed: {}".format(doraFailed))
 
 end = time.time()
 
