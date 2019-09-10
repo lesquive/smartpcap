@@ -494,6 +494,20 @@ var Dropzone = function (_Emitter) {
          */
         init: function init() {
 
+          this.on("success", function(file) {
+
+            const btnUnHide = document.getElementById('sumbit-button-id');
+            btnUnHide.hidden = false;
+
+          });
+
+          this.on("removedfile", function(file) {
+
+            const btnUnHide = document.getElementById('sumbit-button-id');
+            btnUnHide.hidden = true;
+
+          });
+
         },
 
 
