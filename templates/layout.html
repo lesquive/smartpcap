@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Smart PCAP</title>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='StyleSheet.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='dropzone.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='dropzone-amd-module.js') }}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+
+        <div class="topnav">
+                <a href="#">DHCP</a>
+                <a href="#">DNS</a>
+                <a href="#">ICMP</a>
+                <a href="#">SIP</a>
+                </div>
+
+        <div class="content">
+                <h2>Smart PCAP</h2>
+                <p>A simple tool to analyze packet captures</p>
+                </div>
+
+            {% block body %} 
+            
+            {% endblock %}
+
+    <footer>
+            <div class="footer">
+            <p>Developed by:</p>
+            <p>Luis J. Esquivel B. | CCIE #57462</p>
+            </div>
+    </footer>
+
+    </body>
+
+</html>

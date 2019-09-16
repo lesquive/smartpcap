@@ -1,12 +1,12 @@
 * {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
 }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  position: relative;
   min-height: 100vh;
 }
 
@@ -14,7 +14,7 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #2b4873;
-  bottom margin:2px;
+  /* bottom margin:2px; */
 }
 
 /* Style the topnav links */
@@ -38,8 +38,7 @@ body {
   background-color: #ddd;
   padding: 10px;
   text-align: center;
-  bottom margin:2px;
-  
+  /* bottom margin:2px; */
 }
 
 .submitbutton {
@@ -53,7 +52,6 @@ body {
   /* border: 4px solid #494949 !important; */
   display: inline-block;
   transition: all 0.4s ease 0s;
-
   color: #ffffff !important;
   background: #2b4873;
   border-color: #2b4873 !important;
@@ -65,21 +63,18 @@ body {
     background: #2b4873;
     border-color: #2b4873 !important; */
     transition: all 0.4s ease 0s;
-
     color: #494949 !important; 
     background: #f1f1f1;
     border-color: #494949 !important;
 
     }
 
-/* Style the footer */
-.footer {
-  background-color: #f1f1f1;
-  padding: 10px;
+footer {
+  width: 100%;
+  background-color: #efefef;
   text-align: center;
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom:0; 
 }
 
 /*
@@ -270,6 +265,7 @@ body {
   margin-right:25%;
   margin-top: 10%;
   margin-bottom: 5%;
+  position: relative;
   padding: 20px 20px; }
   .dropzone.dz-clickable {
     cursor: pointer; }

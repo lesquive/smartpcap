@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'layout.html' %}
 
-<head>
-<title>Smart PCAP</title>
-<meta charset="utf-8">
-</head>
+{% block body %}
 
-<body>
     <h1>Success!</h1>
-</body>
 
-</html>
+    <ul>
+        {% for packet in packets%}
+        <li>{{packet}}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
