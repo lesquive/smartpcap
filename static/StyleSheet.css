@@ -16,6 +16,12 @@ body {
 }
 .packets{
   overflow-wrap: break-word;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  color: #58585b;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 footer {
   bottom: 0;

@@ -2,12 +2,31 @@
 
 {% block body %}
 
-    <h1>Success!</h1>
+<h1>DHCP:</h1>
 
     <ul>
-        {% for packet in packets%}
+        <h3>DHCP PACKETS:</h3>
+        {% for packet in dhcp %}
         <p class='packets'>{{packet}}</p>
         {% endfor %}
+
+        <h3>DHCP Failures:</h3>
+        {% for packet in doraFailedList %}
+        <p class='packets'>{{packet}}</p>
+        {% endfor %}
+
+        {% if doraFailedList %}
+        <p class='packets'>Number of failed DHCP transactions: {{doraFailedCount}}</p>
+        {% endif %}
     </ul>
+
+<h1>DNS</h1>
+
+    <ul>
+        <h3>DNS Messages:</h3>
+            {% for packet in dns %}
+            <p class='packets'>{{dns}}</p>
+            {% endfor %}
+        </ul>
 
 {% endblock %}
