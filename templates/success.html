@@ -2,31 +2,51 @@
 
 {% block body %}
 
-<h1>DHCP:</h1>
+{% if dhcp %}
+
+<br>
+<div class="alert alert-success" role="alert">
+    DHCP!
+</div>
 
     <ul>
-        <h3>DHCP PACKETS:</h3>
+        <div class="alert alert-secondary" role="alert">
+            DHCP Messages:
+        </div>
         {% for packet in dhcp %}
         <p class='packets'>{{packet}}</p>
         {% endfor %}
 
-        <h3>DHCP Failures:</h3>
+        {% if doraFailedList %}
+        <div class="alert alert-danger" role="alert">
+            DHCP Failures:
+        </div>
         {% for packet in doraFailedList %}
         <p class='packets'>{{packet}}</p>
         {% endfor %}
 
-        {% if doraFailedList %}
         <p class='packets'>Number of failed DHCP transactions: {{doraFailedCount}}</p>
         {% endif %}
     </ul>
 
-<h1>DNS</h1>
+{% endif %}
+
+{% if dns %}
+
+<div class="alert alert-success" role="alert">
+    DNS!
+</div>
+
 
     <ul>
-        <h3>DNS Messages:</h3>
+        <div class="alert alert-secondary" role="alert">
+            DNS Messages:
+        </div>
             {% for packet in dns %}
             <p class='packets'>{{dns}}</p>
             {% endfor %}
         </ul>
+
+{% endif %}
 
 {% endblock %}
