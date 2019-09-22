@@ -23,9 +23,13 @@ def index():
 @app.route('/success', methods = ['GET','POST'])  
 def success():  
     if request.method == 'POST':  
+
+        #ICMP Related variables:
+        session['icmp_messages'] = []
+        session['icmp_errors'] = []
+        session['icmpFailedCount'] = 0
         
         #DHCP Related variables:
-        # session['dhcp'] = []
         session['dhcp_discover'] = set()
         session['dhcp_ack'] = set()
         session['dora'] = []
@@ -34,7 +38,13 @@ def success():
         session['ipList'] = []
 
         #DNS Related variables:
-        session['dns'] = []
+        session['dns_ID'] = set()
+        session['dns_Response'] = set()
+        session['dns_messages'] = []
+        session['dnsFailed'] = 0
+        session['DNSFailedList'] = []
+
+
         f = request.files['file']  
 
         session["pkts"] = rdpcap (f)
@@ -44,6 +54,30 @@ def success():
         for pkt in session["pkts"]:
 
             pktnum += 1
+
+            try:
+
+                if pkt['ICMP']:
+
+                    srcIp = pkt['IP'].src
+                    dstIp = pkt['IP'].dst
+                    icmpType = pkt['ICMP'].type
+                    icmp_code = pkt['ICMP'].code
+
+                    if icmpType == 3: 
+                        type3_codes = {0:"Net Unreachable", 1:"Host Unreachable", 2:"Protocol Unreachable", 3:"Port Unreachable", 4:"Fragmentation Needed and Don't Fragment was Set", 5:"Source Route Failed", 6:"Destination Network Unknown", 7:"Destination Host Unknown", 8:"Source Host Isolated", 9:"Communication with Destination Network is Administratively Prohibited", 10:"Communication with Destination Host is Administratively Prohibited", 11:"Destination Network Unreachable for Type of Service", 12:"Destination Host Unreachable for Type of Service", 13:"Communication Administratively Prohibited", 14:"Host Precedence Violation", 15:"Precedence cutoff in effect"}
+                        
+                        session['icmpFailedCount'] += 1
+                    
+                        session['icmp_errors'].append("ICMP Type: {} with error: {}, detected from: {} to: {}, packet number: {}".format(icmpType, type3_codes[icmp_code], srcIp, dstIp, pktnum))
+
+                    else:
+                        icmp_id = (hex(pkt['ICMP'].id))
+                        icmp_seq = (hex(pkt['ICMP'].seq))
+                        session['icmp_messages'].append("ICMP Type: {} with code: {}, detected from: {} to: {}, with ID: {} sequence {} and packet number: {}".format(icmpType, icmp_code, srcIp, dstIp, icmp_id, icmp_seq ,pktnum))
+                    
+            except:
+                pass
 
             try:
 
@@ -69,8 +103,40 @@ def success():
             try: 
                 
                 if pkt['DNS']:
-                    session['dns'].append(pkt)
-                    
+                    dnsId = (hex(pkt['DNS'].id))
+                    dns = pkt['UDP'].dport
+                    isDNSAnswer = bool (pkt['DNS'].qr)
+                    dns_error = pkt['DNS'].rcode
+                    dnsQType= pkt['DNS']['DNS Question Record'].qtype
+                    srcIp = pkt['IP'].src
+                    dstIp = pkt['IP'].dst
+
+                    if isDNSAnswer == False:
+                        dnsQuery = pkt['DNS']['DNS Question Record'].qname
+                        session['dns_ID'].add(dnsId)
+                        session['dns_messages'].append("DNS type {} Query: {} with ID: {}. Source IP: {}. Destination IP: {}. Packet Number: {}".format(dnsQType, dnsQuery, dnsId, srcIp, dstIp, pktnum))
+                    elif dns_error == 3:
+                        error3 = "Domain Name doesn't appear to exist"
+                        session['dns_messages'].append("DNS type {} Response with ID: {} and Error: {}. Source IP: {}. Destination IP: {}. Packet Number: {}".format(dnsQType, dnsId, error3, srcIp, dstIp, pktnum))
+                        session['dnsFailed'] +=1
+                    elif dns_error == 1:
+                        error1 = "DNS Query Format Error"
+                        session['dns_messages'].append("DNS type {} Response with ID: {} and Error: {}. Source IP: {}. Destination IP: {}. Packet Number: {}".format(dnsQType, dnsId, error1, srcIp, dstIp, pktnum))
+                        session['dnsFailed'] +=1
+                    elif dns_error != 0:
+                        errorNot0 = "There was an error when trying to resolve DNS"
+                        session['dns_messages'].append("DNS type {} Response with ID: {} and Error: {}. Source IP: {}. Destination IP: {}. Packet Number: {}".format(dnsQType, dnsId, errorNot0, srcIp, dstIp, pktnum))
+                        session['dnsFailed'] +=1
+                    else:
+                        dnsAns = pkt['DNS']['DNS Resource Record'].rrname
+                        dnsAns2 = pkt['DNS']['DNS Resource Record'].rdata
+                        session['dns_Response'].add(dnsId)
+                        session['dns_messages'].append("DNS type {} Response: {} - {} with ID: {}. Source IP: {}. Destination IP: {}. Packet Number: {}".format(dnsQType, dnsAns, dnsAns2, dnsId, srcIp, dstIp, pktnum))
+                  
+                    # for i in session['dns_ID']:
+                    #     if dnsId in session['dns_ID']:
+                    #         session['dns_Response'].add(dnsId)
+
             except:
                 pass
 
@@ -80,4 +146,10 @@ def success():
                 session['doraFailedList'].append("DHCP ACK missing for transaction ID: {}".format(i))
                 session['doraFailedCount'] +=1
 
-    return render_template("success.html", dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns'])
+        for i in session['dns_ID']:
+            if i not in session['dns_Response']:
+                session['DNSFailedList'].append(("DNS error found with ID: {}".format(i)))
+                # session['dnsFailed'] +=1
+            
+
+    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'])

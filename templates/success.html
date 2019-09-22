@@ -2,6 +2,46 @@
 
 {% block body %}
 
+{% if icmp_messages or icmp_errors %}
+
+    <br>
+    <div class="alert alert-success" role="alert">
+        ICMP!
+    </div>
+
+    {% if icmp_messages %}
+
+    <ul>
+        <div class="alert alert-secondary" role="alert">
+            ICMP Messages:
+        </div>
+
+        {% for packet in icmp_messages %}
+        <p class='packets'>{{packet}}</p>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    {% if icmp_errors %}
+
+    <br>
+    <div class="alert alert-danger" role="alert">
+        ICMP Failures:
+    </div>
+
+    <ul>
+        {% for packet in icmp_errors %}
+        <p class='packets'>{{packet}}</p>
+        {% endfor %}
+
+        <p class='packets'>Number of ICMP errors: {{icmpFailedCount}}</p>
+    </ul>
+
+    {% endif %}
+
+{% endif %}
+
 {% if dhcp %}
 
 <br>
@@ -33,6 +73,7 @@
 
 {% if dns %}
 
+<br>
 <div class="alert alert-success" role="alert">
     DNS!
 </div>
@@ -43,9 +84,20 @@
             DNS Messages:
         </div>
             {% for packet in dns %}
-            <p class='packets'>{{dns}}</p>
+            <p class='packets'>{{packet}}</p>
             {% endfor %}
-        </ul>
+
+        {% if DNSFailedList %}
+        <div class="alert alert-danger" role="alert">
+            DNS Failures:
+        </div>
+        {% for packet in DNSFailedList %}
+        <p class='packets'>{{packet}}</p>
+        {% endfor %}
+
+        <p class='packets'>Number of DNS packets with errors: {{dnsFailed}}</p>
+        {% endif %}
+    </ul>
 
 {% endif %}
 
