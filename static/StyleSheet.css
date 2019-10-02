@@ -435,7 +435,7 @@ footer {
       position: absolute;
       height: 16px;
       left: 50%;
-      top: 50%;
+      top: 65%;
       margin-top: -8px;
       width: 80px;
       margin-left: -40px;
@@ -475,7 +475,7 @@ footer {
       transition: opacity 0.3s ease;
       border-radius: 8px;
       font-size: 13px;
-      top: 130px;
+      top: 153px;
       left: -10px;
       width: 140px;
       background: #be2626;
