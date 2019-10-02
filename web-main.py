@@ -15,13 +15,18 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
+@app.route("/loading", methods = ['GET'])
+def loading():
+        
+    return render_template("loading.html")
+
 @app.route('/success', methods = ['GET','POST'])  
 def success():  
+
     if request.method == 'POST':  
 
         #ICMP Related variables:
@@ -151,5 +156,4 @@ def success():
                 session['DNSFailedList'].append(("DNS error found with ID: {}".format(i)))
                 # session['dnsFailed'] +=1
             
-
     return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'])
