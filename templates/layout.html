@@ -8,6 +8,7 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='StyleSheet.css') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='dropzone.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='hilitor.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='dropzone-amd-module.js') }}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
@@ -27,8 +28,8 @@
         <nav class="navbar navbar-light" style="background-color: #2b4873;">
             <a class="navbar-brand"></a>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="Search" aria-label="Search">
+                <!-- <button class="btn btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button> -->
             </form>
         </nav>
 

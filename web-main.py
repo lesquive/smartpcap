@@ -49,6 +49,17 @@ def success():
         session['dnsFailed'] = 0
         session['DNSFailedList'] = []
 
+        #HTTP Related variables:
+
+        #SSL Related variables:
+
+        #ARP Related variables:
+
+        #SIP Related variables:
+        session['sip_messages'] = []
+
+        #LDAP Related variables:
+
 
         f = request.files['file']  
 
@@ -145,6 +156,17 @@ def success():
             except:
                 pass
 
+            try:
+
+                if ((pkt["UDP"].dport == 5060) or (pkt["UDP"].sport == 5060) or (pkt["TCP"].dport == 5060) or (pkt["TCP"].sport == 5060)) and (pkt["IP"].len > 100): 
+        
+                    raw_sip_message = str(pkt[Raw].load)
+                    sip_message = raw_sip_message.split("\\r\\n")
+                    session['sip_messages'].append(sip_message)
+
+            except:
+                pass
+
 
         for i in session['dhcp_discover']:
             if i not in session['dhcp_ack']:
@@ -156,4 +178,4 @@ def success():
                 session['DNSFailedList'].append(("DNS error found with ID: {}".format(i)))
                 # session['dnsFailed'] +=1
             
-    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'])
+    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'],sip_messages=session['sip_messages'])

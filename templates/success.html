@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
 {% if icmp_messages or icmp_errors %}
 
     <br>
@@ -97,6 +98,35 @@
 
         <p class='packets'>Number of DNS packets with errors: {{dnsFailed}}</p>
         {% endif %}
+    </ul>
+
+{% endif %}
+
+{% if sip_messages %}
+
+<br>
+<div class="alert alert-success" role="alert">
+    SIP!
+</div>
+
+    <ul>
+        <div class="alert alert-secondary" role="alert">
+            SIP Messages:
+        </div>
+        
+            <div>
+            {% for message in sip_messages %}
+
+                <div>
+                {% for line in message[:-1] %}
+                <h5 class='packets'>{{line}}</h5>
+                {% endfor %}
+                </div>
+
+            <br>
+            {% endfor %}
+            </div>
+
     </ul>
 
 {% endif %}
