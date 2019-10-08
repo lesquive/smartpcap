@@ -54,13 +54,13 @@ def success():
         #SSL Related variables:
 
         #ARP Related variables:
+        session['arp_messages'] = []
 
         #SIP Related variables:
         session['sip_messages'] = []
         session['sip_layer3'] = []
 
         #LDAP Related variables:
-
 
         f = request.files['file']  
 
@@ -171,6 +171,26 @@ def success():
             except:
                 pass
 
+            try:
+
+                if pkt['ARP']:
+        
+                    srcmac = (pkt['Ether'].src)
+                    dstmac = (pkt['Ether'].dst)
+                    sender_mac = (pkt['ARP'].hwsrc)
+                    sender_ip = (pkt['ARP'].psrc)
+                    target_mac = (pkt['ARP'].hwdst)
+                    target_ip = (pkt['ARP'].pdst)
+                    arp_type = (pkt['ARP'].op)
+
+                    if arp_type == 1:
+                        session['arp_messages'].append("Source MAC: {} Destination MAC: {} - Who has: {}? Tell {}".format(srcmac, dstmac, target_ip, sender_ip))
+                    if arp_type == 2:
+                        session['arp_messages'].append("Source MAC: {} Destination MAC: {} - {} is at {}".format(srcmac, dstmac, target_ip, target_mac))
+
+            except:
+                pass
+
 
         for i in session['dhcp_discover']:
             if i not in session['dhcp_ack']:
@@ -182,4 +202,4 @@ def success():
                 session['DNSFailedList'].append(("DNS error found with ID: {}".format(i)))
                 # session['dnsFailed'] +=1
             
-    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'], sip_layer3=session['sip_layer3'],sip_messages=session['sip_messages'])
+    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'], sip_layer3=session['sip_layer3'],sip_messages=session['sip_messages'], arp_messages=session['arp_messages'])
