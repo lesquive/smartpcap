@@ -68,6 +68,20 @@ def success():
 
         pktnum = 0
 
+        try:
+            x = str(session["pkts"])
+            y = x.split()
+
+            y1 = y[1][4:]
+            y2 = y[2][4:]
+            y3 = y[3][5:]
+            y4 = y[4][6:-1]
+
+            session['mylist'] = [y1, y2, y3, y4]
+
+        except:
+            print("An exception occurred")
+
         for pkt in session["pkts"]:
 
             pktnum += 1
@@ -202,4 +216,4 @@ def success():
                 session['DNSFailedList'].append(("DNS error found with ID: {}".format(i)))
                 # session['dnsFailed'] +=1
             
-    return render_template("success.html", icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'], sip_layer3=session['sip_layer3'],sip_messages=session['sip_messages'], arp_messages=session['arp_messages'])
+    return render_template("success.html", mylist=session['mylist'], icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'], sip_layer3=session['sip_layer3'],sip_messages=session['sip_messages'], arp_messages=session['arp_messages'])

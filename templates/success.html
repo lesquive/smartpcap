@@ -2,6 +2,30 @@
 
 {% block body %}
 
+<br>
+
+<div id= "top data">
+
+<ul class="list-group list-group-horizontal" id='list-group'>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          TCP Packets&nbsp;
+          <span class="badge badge-primary badge-pill">{{mylist[0]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          UDP Packets&nbsp;
+          <span class="badge badge-primary badge-pill">{{mylist[1]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          ICMP Packets&nbsp;   
+          <span class="badge badge-primary badge-pill">{{mylist[2]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Other&nbsp;
+          <span class="badge badge-primary badge-pill">{{mylist[3]}}</span>
+        </li>
+      </ul>
+
+</div>
 
 {% if icmp_messages or icmp_errors %}
 
@@ -26,7 +50,6 @@
 
     {% if icmp_errors %}
 
-    <br>
     <div class="alert alert-danger" role="alert">
         ICMP Failures:
     </div>

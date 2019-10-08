@@ -91,6 +91,13 @@ footer {
 
     }
 
+  .topdata {
+    text-align: center;
+  }
+
+  #list-group{
+    justify-content: center;
+  }
 
 /*
  * The MIT License
