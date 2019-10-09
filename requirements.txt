@@ -2,3 +2,4 @@ scapy==2.4.3
 Flask==1.1.1
 Flask-Session==0.3.0
 Jinja2==2.10.3
+gunicorn==19.9.0
