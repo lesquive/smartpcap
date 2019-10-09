@@ -101,7 +101,7 @@ def success():
             session['mylist'] = [y1, y2, y3, y4]
 
         except:
-          pass
+            pass
 
         for pkt in session["pkts"]:
 
