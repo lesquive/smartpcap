@@ -91,7 +91,7 @@ def success():
             session['mylist'] = [y1, y2, y3, y4]
 
         except:
-            print("An exception occurred")
+            pass
 
         for pkt in session["pkts"]:
 
