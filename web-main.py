@@ -228,3 +228,7 @@ def success():
                 # session['dnsFailed'] +=1
             
     return render_template("success.html", mylist=session['mylist'], icmp_messages=session['icmp_messages'], icmp_errors=session['icmp_errors'], icmpFailedCount=session['icmpFailedCount'], dhcp=session['dora'], doraFailedList=session['doraFailedList'], doraFailedCount=session['doraFailedCount'], dns=session['dns_messages'], DNSFailedList=session['DNSFailedList'], dnsFailed=session['dnsFailed'], sip_layer3=session['sip_layer3'],sip_messages=session['sip_messages'], arp_messages=session['arp_messages'])
+
+if __name__ == '__main__':
+
+    app.run()
