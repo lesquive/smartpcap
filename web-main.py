@@ -24,6 +24,17 @@ def loading():
         
     return render_template("loading.html")
 
+@app.route("/allpackets", methods = ['GET'])
+def allpackets():
+
+    rawpackets = session["pkts"] 
+    session['allpackets'] = []
+
+    for packets in rawpackets:
+        session['allpackets'].append(packets.summary())
+
+    return render_template ("allpackets.html", allpackets=session['allpackets'])
+
 @app.route('/success', methods = ['GET','POST'])  
 def success():  
 

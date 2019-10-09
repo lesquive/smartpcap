@@ -15,6 +15,9 @@
 
     <body>
 
+        {% block navbar %} 
+            
+            
         <!-- <div class="topnav">
                 <a href="#">DHCP</a>
                 <a href="#">DNS</a>
@@ -29,9 +32,10 @@
             <a class="navbar-brand"></a>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="Search" aria-label="Search">
-                <!-- <button class="btn btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button> -->
             </form>
         </nav>
+
+        {% endblock %}
 
         <div class="content">
                 <h2>Smart PCAP</h2>

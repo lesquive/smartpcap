@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<br>
+
+{% for packet in allpackets %}
+
+<p class='packets'>{{packet}}</p>
+
+{% endfor %}
+
+{% endblock %}

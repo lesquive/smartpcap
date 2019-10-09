@@ -98,7 +98,12 @@ footer {
   #list-group{
     justify-content: center;
   }
+  #view_all_packets{
+    margin-top:auto;
+    margin-bottom: auto;
+  }
 
+  
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
@@ -506,7 +511,7 @@ h1 {
   word-break: break-all;
   word-wrap: break-word;
   text-transform: uppercase;
-  left: 47%;
+  left: 45%;
   top: 58%;
   margin-left: -20px;
   }
@@ -514,7 +519,7 @@ h1 {
 position: absolute;
 top: 50%;
 margin-left: -50px;
-left: 50%;
+left: 49%;
 animation: speeder .4s linear infinite;
 }
 .body > span {
