@@ -35,7 +35,7 @@ def allpackets():
 
     return render_template ("allpackets.html", allpackets=session['allpackets'])
 
-@app.route('/success', methods = ['GET','POST'])  
+@app.route('/success', methods = ['POST'])  
 def success():  
 
     if request.method == 'POST':  
