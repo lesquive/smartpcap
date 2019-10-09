@@ -48,6 +48,8 @@ def success():
 
     if request.method == 'POST':  
 
+        session['mylist'] = []
+
         #ICMP Related variables:
         session['icmp_messages'] = []
         session['icmp_errors'] = []
@@ -99,7 +101,7 @@ def success():
             session['mylist'] = [y1, y2, y3, y4]
 
         except:
-            pass
+          pass
 
         for pkt in session["pkts"]:
 

@@ -40,6 +40,8 @@ def success():
 
     if request.method == 'POST':  
 
+        session['mylist'] = []
+
         #ICMP Related variables:
         session['icmp_messages'] = []
         session['icmp_errors'] = []
