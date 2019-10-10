@@ -1,1 +1,1 @@
-web: gunicorn smartpcap.wsgi 
+web: gunicorn main.app 
