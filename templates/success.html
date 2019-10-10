@@ -15,7 +15,8 @@
 
 <nav class="navbar navbar-light" style="background-color: #2b4873;">
     <a class="navbar-brand"></a>
-    <a id='view_all_packets' href="{{ url_for('allpackets') }}" style="margin-right: auto; color: white">View All Packets</a>
+    <a class='topnav' href="{{ url_for('index') }}" style="color: white">+New Capture</a>&nbsp;&nbsp;&nbsp;
+    <a class='topnav' href="{{ url_for('allpackets') }}" style="margin-right: auto; color: white">+All Packets</a>
     <form class="form-inline">
         <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="Search" aria-label="Search">
     </form>

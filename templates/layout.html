@@ -30,6 +30,7 @@
 
         <nav class="navbar navbar-light" style="background-color: #2b4873;">
             <a class="navbar-brand"></a>
+            <a class='topnav' href="{{ url_for('index') }}" style="margin-right: auto; color: white">+Reset</a>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" id="searchbar" type="search" placeholder="Search" aria-label="Search">
             </form>
@@ -47,6 +48,8 @@
             {% block body %} 
             
             {% endblock %}
+
+            <button onclick="topFunction()" id="scroll-to-top-button" title="Go to top">Top</button>
 
         </div>
 
