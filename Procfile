@@ -1,1 +1,1 @@
-web: gunicorn smartpcap.wsgi --log-file -
+web: gunicorn smartpcap.wsgi 
